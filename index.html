@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>NiftyScanner</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #0b1120;
+            color: #ffffff;
+        }
+
+        header {
+            background: #111827;
+            padding: 20px 30px;
+            border-bottom: 1px solid #263244;
+        }
+
+        header h1 {
+            font-size: 28px;
+        }
+
+        header p {
+            margin-top: 5px;
+            color: #94a3b8;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: auto;
+            padding: 25px;
+        }
+
+        .market-status {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
+
+        .card {
+            background: #111827;
+            border: 1px solid #263244;
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .market-card {
+            flex: 1;
+            min-width: 220px;
+        }
+
+        .market-card h3 {
+            color: #94a3b8;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .price {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .positive {
+            color: #22c55e;
+        }
+
+        .negative {
+            color: #ef4444;
+        }
+
+        .section-title {
+            margin: 25px 0 15px;
+            font-size: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #111827;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th,
+        td {
+            padding: 14px;
+            text-align: left;
+            border-bottom: 1px solid #263244;
+        }
+
+        th {
+            background: #1e293b;
+            color: #cbd5e1;
+        }
+
+        td {
+            color: #e2e8f0;
+        }
+
+        .buy {
+            color: #22c55e;
+            font-weight: bold;
+        }
+
+        .sell {
+            color: #ef4444;
+            font-weight: bold;
+        }
+
+        .exit {
+            color: #f59e0b;
+            font-weight: bold;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 35px;
+            color: #64748b;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        @media (max-width: 700px) {
+            .container {
+                padding: 15px;
+            }
+
+            header {
+                padding: 18px;
+            }
+
+            header h1 {
+                font-size: 23px;
+            }
+
+            th,
+            td {
+                padding: 10px 8px;
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>📊 NiftyScanner</h1>
+    <p>Intraday Market Scanner</p>
+</header>
+
+<div class="container">
+
+    <div class="market-status">
+
+        <div class="card market-card">
+            <h3>NIFTY 50</h3>
+            <div class="price">--</div>
+            <div class="positive">Waiting for data</div>
+        </div>
+
+        <div class="card market-card">
+            <h3>BANK NIFTY</h3>
+            <div class="price">--</div>
+            <div class="positive">Waiting for data</div>
+        </div>
+
+        <div class="card market-card">
+            <h3>MARKET STATUS</h3>
+            <div class="price">●</div>
+            <div>Scanner starting...</div>
+        </div>
+
+    </div>
+
+    <h2 class="section-title">Scanner Signals</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Time</th>
+                <th>Stock</th>
+                <th>Signal</th>
+                <th>Price</th>
+                <th>Strategy</th>
+            </tr>
+        </thead>
+
+        <tbody id="signals">
+
+            <tr>
+                <td colspan="5" class="empty">
+                    Waiting for scanner signals...
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+
+</div>
+
+<footer>
+    NiftyScanner © 2026
+</footer>
+
+</body>
+</html>
