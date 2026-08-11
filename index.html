@@ -1,413 +1,510 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>NiftyScanner | Intraday Trading Dashboard</title>
+```
+<title>NiftyScanner | Intraday Trading Dashboard</title>
 
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
 
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            background: #0b1120;
-            color: #f8fafc;
-        }
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        background: #0b1120;
+        color: #f8fafc;
+    }
 
-        header {
-            background: #111827;
-            border-bottom: 1px solid #263244;
-            padding: 20px 30px;
-        }
+    header {
+        background: #111827;
+        border-bottom: 1px solid #263244;
+        padding: 20px 30px;
+    }
 
-        .header-content {
-            max-width: 1500px;
-            margin: auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 20px;
-        }
+    .header-content {
+        max-width: 1500px;
+        margin: auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+    }
 
-        .logo h1 {
-            font-size: 28px;
-            color: #ffffff;
-        }
+    .logo h1 {
+        font-size: 28px;
+        color: #ffffff;
+    }
 
-        .logo p {
-            margin-top: 5px;
-            color: #94a3b8;
-            font-size: 14px;
-        }
+    .logo p {
+        margin-top: 5px;
+        color: #94a3b8;
+        font-size: 14px;
+    }
 
-        .market-status {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 14px;
-            color: #22c55e;
-        }
+    .market-status {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 14px;
+        color: #22c55e;
+    }
 
-        .status-dot {
-            width: 10px;
-            height: 10px;
-            background: #22c55e;
-            border-radius: 50%;
-            display: inline-block;
-        }
+    .status-dot {
+        width: 10px;
+        height: 10px;
+        background: #22c55e;
+        border-radius: 50%;
+        display: inline-block;
+    }
 
-        .container {
-            max-width: 1500px;
-            margin: auto;
-            padding: 25px;
-        }
+    .container {
+        max-width: 1500px;
+        margin: auto;
+        padding: 25px;
+    }
 
-        .section-title {
-            font-size: 20px;
-            margin-bottom: 15px;
-        }
+    .section {
+        margin-bottom: 30px;
+    }
 
-        .market-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin-bottom: 30px;
-        }
+    .section-title {
+        font-size: 20px;
+        margin-bottom: 15px;
+    }
 
-        .market-card {
-            background: #111827;
-            border: 1px solid #263244;
-            border-radius: 12px;
-            padding: 22px;
-        }
+    .market-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+        margin-bottom: 30px;
+    }
 
-        .market-card h3 {
-            color: #94a3b8;
-            font-size: 14px;
-            margin-bottom: 12px;
-        }
+    .market-card {
+        background: #111827;
+        border: 1px solid #263244;
+        border-radius: 12px;
+        padding: 22px;
+    }
 
-        .market-price {
-            font-size: 30px;
-            font-weight: bold;
-            margin-bottom: 8px;
-        }
+    .market-card h3 {
+        color: #94a3b8;
+        font-size: 14px;
+        margin-bottom: 12px;
+    }
 
-        .market-change {
-            font-size: 14px;
-        }
+    .market-price {
+        font-size: 30px;
+        font-weight: bold;
+        margin-bottom: 8px;
+    }
 
-        .positive {
-            color: #22c55e;
-        }
+    .market-change {
+        font-size: 14px;
+    }
 
-        .negative {
-            color: #ef4444;
-        }
+    .positive {
+        color: #22c55e;
+    }
 
-        .neutral {
-            color: #94a3b8;
+    .negative {
+        color: #ef4444;
+    }
+
+    .neutral {
+        color: #94a3b8;
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 15px;
+        margin-bottom: 30px;
+    }
+
+    .stat-card {
+        background: #111827;
+        border: 1px solid #263244;
+        border-radius: 12px;
+        padding: 20px;
+    }
+
+    .stat-card h3 {
+        color: #94a3b8;
+        font-size: 13px;
+        margin-bottom: 12px;
+    }
+
+    .stat-number {
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .buy-number {
+        color: #22c55e;
+    }
+
+    .sell-number {
+        color: #ef4444;
+    }
+
+    .exit-number {
+        color: #f59e0b;
+    }
+
+    /* =====================================================
+       PAPER TRADE
+    ===================================================== */
+
+    .paper-trade-card {
+        background: #111827;
+        border: 1px solid #263244;
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    .paper-trade-header {
+        padding: 18px 22px;
+        background: #1e293b;
+        border-bottom: 1px solid #263244;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .paper-trade-header h3 {
+        font-size: 18px;
+    }
+
+    .trade-status {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 7px 12px;
+        border-radius: 6px;
+        background: rgba(100, 116, 139, 0.12);
+        color: #94a3b8;
+        font-size: 13px;
+        font-weight: bold;
+    }
+
+    .trade-status.open {
+        background: rgba(34, 197, 94, 0.12);
+        color: #22c55e;
+    }
+
+    .trade-status.closed {
+        background: rgba(100, 116, 139, 0.12);
+        color: #94a3b8;
+    }
+
+    .paper-trade-body {
+        padding: 22px;
+    }
+
+    .trade-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 15px;
+    }
+
+    .trade-item {
+        background: #0b1120;
+        border: 1px solid #263244;
+        border-radius: 8px;
+        padding: 15px;
+    }
+
+    .trade-item h4 {
+        color: #64748b;
+        font-size: 12px;
+        margin-bottom: 8px;
+        text-transform: uppercase;
+    }
+
+    .trade-item p {
+        color: #f8fafc;
+        font-size: 17px;
+        font-weight: bold;
+        word-break: break-word;
+    }
+
+    .trade-item .profit {
+        color: #22c55e;
+    }
+
+    .trade-item .loss {
+        color: #ef4444;
+    }
+
+    .trade-item .locked {
+        color: #f59e0b;
+    }
+
+    .trade-empty {
+        text-align: center;
+        padding: 45px 20px;
+        color: #64748b;
+    }
+
+    .trade-empty-icon {
+        font-size: 35px;
+        margin-bottom: 10px;
+    }
+
+    .trade-empty h3 {
+        color: #94a3b8;
+        margin-bottom: 7px;
+    }
+
+    .trade-footer {
+        border-top: 1px solid #263244;
+        padding: 12px 22px;
+        color: #64748b;
+        font-size: 12px;
+        display: flex;
+        justify-content: space-between;
+        gap: 15px;
+    }
+
+    /* =====================================================
+       SCANNER SIGNALS
+    ===================================================== */
+
+    .table-container {
+        background: #111827;
+        border: 1px solid #263244;
+        border-radius: 12px;
+        overflow-x: auto;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th {
+        background: #1e293b;
+        color: #cbd5e1;
+        padding: 15px;
+        text-align: left;
+        font-size: 13px;
+        white-space: nowrap;
+    }
+
+    td {
+        padding: 15px;
+        border-top: 1px solid #263244;
+        color: #e2e8f0;
+        font-size: 14px;
+        white-space: nowrap;
+    }
+
+    .signal-buy {
+        color: #22c55e;
+        font-weight: bold;
+    }
+
+    .signal-sell {
+        color: #ef4444;
+        font-weight: bold;
+    }
+
+    .signal-exit {
+        color: #f59e0b;
+        font-weight: bold;
+    }
+
+    .signal-badge {
+        display: inline-block;
+        padding: 5px 9px;
+        border-radius: 5px;
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+    .buy-badge {
+        background: rgba(34, 197, 94, 0.12);
+        color: #22c55e;
+    }
+
+    .sell-badge {
+        background: rgba(239, 68, 68, 0.12);
+        color: #ef4444;
+    }
+
+    .exit-badge {
+        background: rgba(245, 158, 11, 0.12);
+        color: #f59e0b;
+    }
+
+    .empty-row {
+        text-align: center;
+        padding: 35px;
+        color: #64748b;
+    }
+
+    .last-updated {
+        margin-top: 12px;
+        color: #64748b;
+        font-size: 12px;
+    }
+
+    footer {
+        text-align: center;
+        padding: 30px;
+        color: #64748b;
+        font-size: 13px;
+        border-top: 1px solid #1e293b;
+        margin-top: 20px;
+    }
+
+    /* =====================================================
+       MOBILE
+    ===================================================== */
+
+    @media (max-width: 1100px) {
+
+        .trade-grid {
+            grid-template-columns: repeat(2, 1fr);
         }
 
         .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
-            margin-bottom: 30px;
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 900px) {
+
+        .market-grid {
+            grid-template-columns: 1fr;
         }
 
-        .stat-card {
-            background: #111827;
-            border: 1px solid #263244;
-            border-radius: 12px;
-            padding: 20px;
+        .header-content {
+            align-items: flex-start;
+            flex-direction: column;
         }
+    }
 
-        .stat-card h3 {
-            color: #94a3b8;
-            font-size: 13px;
-            margin-bottom: 12px;
-        }
+    @media (max-width: 600px) {
 
-        .stat-number {
-            font-size: 28px;
-            font-weight: bold;
-        }
-
-        .buy-number {
-            color: #22c55e;
-        }
-
-        .sell-number {
-            color: #ef4444;
-        }
-
-        .exit-number {
-            color: #f59e0b;
-        }
-
-        .section {
-            margin-bottom: 30px;
-        }
-
-        .table-container {
-            background: #111827;
-            border: 1px solid #263244;
-            border-radius: 12px;
-            overflow-x: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th {
-            background: #1e293b;
-            color: #cbd5e1;
+        .container {
             padding: 15px;
-            text-align: left;
-            font-size: 13px;
-            white-space: nowrap;
         }
 
-        td {
-            padding: 15px;
-            border-top: 1px solid #263244;
-            color: #e2e8f0;
-            font-size: 14px;
-            white-space: nowrap;
+        header {
+            padding: 18px;
         }
 
-        .signal-buy {
-            color: #22c55e;
-            font-weight: bold;
+        .stats-grid {
+            grid-template-columns: 1fr 1fr;
         }
 
-        .signal-sell {
-            color: #ef4444;
-            font-weight: bold;
+        .trade-grid {
+            grid-template-columns: 1fr;
         }
 
-        .signal-exit {
-            color: #f59e0b;
-            font-weight: bold;
+        .logo h1 {
+            font-size: 23px;
         }
 
-        .signal-badge {
-            display: inline-block;
-            padding: 5px 9px;
-            border-radius: 5px;
-            font-size: 12px;
-            font-weight: bold;
+        .paper-trade-header {
+            align-items: flex-start;
+            flex-direction: column;
         }
 
-        .buy-badge {
-            background: rgba(34, 197, 94, 0.12);
-            color: #22c55e;
+        .trade-footer {
+            flex-direction: column;
         }
+    }
+</style>
+```
 
-        .sell-badge {
-            background: rgba(239, 68, 68, 0.12);
-            color: #ef4444;
-        }
-
-        .exit-badge {
-            background: rgba(245, 158, 11, 0.12);
-            color: #f59e0b;
-        }
-
-        .empty-row {
-            text-align: center;
-            padding: 35px;
-            color: #64748b;
-        }
-
-        .last-updated {
-            margin-top: 12px;
-            color: #64748b;
-            font-size: 12px;
-        }
-
-        footer {
-            text-align: center;
-            padding: 30px;
-            color: #64748b;
-            font-size: 13px;
-            border-top: 1px solid #1e293b;
-            margin-top: 20px;
-        }
-
-        @media (max-width: 900px) {
-            .market-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .header-content {
-                align-items: flex-start;
-                flex-direction: column;
-            }
-        }
-
-        @media (max-width: 600px) {
-            .container {
-                padding: 15px;
-            }
-
-            header {
-                padding: 18px;
-            }
-
-            .stats-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-
-            .logo h1 {
-                font-size: 23px;
-            }
-        }
-    </style>
 </head>
 
 <body>
 
 <header>
-    <div class="header-content">
 
-        <div class="logo">
-            <h1>📊 NiftyScanner</h1>
-            <p>Intraday Market Scanner</p>
-        </div>
+```
+<div class="header-content">
 
-        <div class="market-status">
-            <span class="status-dot"></span>
-            <span>Scanner Online</span>
-        </div>
-
+    <div class="logo">
+        <h1>📊 NiftyScanner</h1>
+        <p>Intraday Market Scanner</p>
     </div>
+
+    <div class="market-status">
+        <span class="status-dot"></span>
+        <span>Scanner Online</span>
+    </div>
+
+</div>
+```
+
 </header>
 
 <div class="container">
 
-    <!-- MARKET OVERVIEW -->
+```
+<!-- =====================================================
+     MARKET OVERVIEW
+====================================================== -->
 
-    <div class="section">
+<div class="section">
 
-        <h2 class="section-title">Market Overview</h2>
+    <h2 class="section-title">Market Overview</h2>
 
-        <div class="market-grid">
+    <div class="market-grid">
 
-            <div class="market-card">
-                <h3>NIFTY 50</h3>
-                <div class="market-price">--</div>
-                <div class="market-change neutral">
-                    Waiting for live data
-                </div>
+        <div class="market-card">
+
+            <h3>NIFTY 50</h3>
+
+            <div class="market-price">
+                --
             </div>
 
-            <div class="market-card">
-                <h3>BANK NIFTY</h3>
-                <div class="market-price">--</div>
-                <div class="market-change neutral">
-                    Waiting for live data
-                </div>
-            </div>
-
-            <div class="market-card">
-                <h3>MARKET STATUS</h3>
-                <div class="market-price positive">
-                    ●
-                </div>
-                <div class="market-change">
-                    Scanner ready
-                </div>
+            <div class="market-change neutral">
+                Waiting for live data
             </div>
 
         </div>
 
-    </div>
 
+        <div class="market-card">
 
-    <!-- SIGNAL SUMMARY -->
+            <h3>BANK NIFTY</h3>
 
-    <div class="section">
-
-        <h2 class="section-title">Signal Summary</h2>
-
-        <div class="stats-grid">
-
-            <div class="stat-card">
-                <h3>BUY SIGNALS</h3>
-                <div class="stat-number buy-number">0</div>
+            <div class="market-price">
+                --
             </div>
 
-            <div class="stat-card">
-                <h3>SELL SIGNALS</h3>
-                <div class="stat-number sell-number">0</div>
-            </div>
-
-            <div class="stat-card">
-                <h3>EXIT SIGNALS</h3>
-                <div class="stat-number exit-number">0</div>
-            </div>
-
-            <div class="stat-card">
-                <h3>TOTAL SIGNALS</h3>
-                <div class="stat-number">0</div>
+            <div class="market-change neutral">
+                Waiting for live data
             </div>
 
         </div>
 
-    </div>
 
+        <div class="market-card">
 
-    <!-- SCANNER SIGNALS -->
+            <h3>MARKET STATUS</h3>
 
-    <div class="section">
+            <div class="market-price positive">
+                ●
+            </div>
 
-        <h2 class="section-title">Scanner Signals</h2>
+            <div class="market-change">
+                Scanner ready
+            </div>
 
-        <div class="table-container">
-
-            <table>
-
-                <thead>
-
-                    <tr>
-                        <th>Time</th>
-                        <th>Stock</th>
-                        <th>Signal</th>
-                        <th>Price</th>
-                        <th>Strategy</th>
-                    </tr>
-
-                </thead>
-
-                <tbody id="signals">
-
-                    <tr>
-                        <td colspan="5" class="empty-row">
-                            Waiting for scanner signals...
-                        </td>
-                    </tr>
-
-                </tbody>
-
-            </table>
-
-        </div>
-
-        <div class="last-updated">
-            Last updated: Waiting for scanner data
         </div>
 
     </div>
@@ -415,10 +512,605 @@
 </div>
 
 
+<!-- =====================================================
+     SIGNAL SUMMARY
+====================================================== -->
+
+<div class="section">
+
+    <h2 class="section-title">Signal Summary</h2>
+
+    <div class="stats-grid">
+
+        <div class="stat-card">
+
+            <h3>BUY SIGNALS</h3>
+
+            <div class="stat-number buy-number">
+                0
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <h3>SELL SIGNALS</h3>
+
+            <div class="stat-number sell-number">
+                0
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <h3>EXIT SIGNALS</h3>
+
+            <div class="stat-number exit-number">
+                0
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <h3>TOTAL SIGNALS</h3>
+
+            <div class="stat-number">
+                0
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     PAPER TRADING
+====================================================== -->
+
+<div class="section">
+
+    <h2 class="section-title">
+        NIFTY Paper Trade
+    </h2>
+
+
+    <div class="paper-trade-card">
+
+        <!-- TRADE HEADER -->
+
+        <div class="paper-trade-header">
+
+            <h3>
+                Live Paper Position
+            </h3>
+
+            <div
+                id="tradeStatus"
+                class="trade-status closed"
+            >
+                ⚪ NO OPEN TRADE
+            </div>
+
+        </div>
+
+
+        <!-- TRADE CONTENT -->
+
+        <div
+            id="paperTradeContent"
+            class="paper-trade-body"
+        >
+
+            <div class="trade-empty">
+
+                <div class="trade-empty-icon">
+                    📋
+                </div>
+
+                <h3>
+                    No Open Paper Trade
+                </h3>
+
+                <p>
+                    Waiting for BUY_CALL or BUY_PUT signal...
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- TRADE FOOTER -->
+
+        <div class="trade-footer">
+
+            <span>
+                Paper trading only
+            </span>
+
+            <span id="tradeLastUpdated">
+                Last update: Waiting for data
+            </span>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     SCANNER SIGNALS
+====================================================== -->
+
+<div class="section">
+
+    <h2 class="section-title">
+        Scanner Signals
+    </h2>
+
+
+    <div class="table-container">
+
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>Time</th>
+                    <th>Stock</th>
+                    <th>Signal</th>
+                    <th>Price</th>
+                    <th>Strategy</th>
+                </tr>
+
+            </thead>
+
+
+            <tbody id="signals">
+
+                <tr>
+
+                    <td
+                        colspan="5"
+                        class="empty-row"
+                    >
+                        Waiting for scanner signals...
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <div class="last-updated">
+        Last updated: Waiting for scanner data
+    </div>
+
+</div>
+```
+
+</div>
+
 <footer>
     NiftyScanner © 2026
 </footer>
 
+<script>
+
+/* ============================================================
+   PAPER TRADE DISPLAY
+   ============================================================
+
+   IMPORTANT:
+
+   For now this uses SAMPLE DATA only.
+
+   Later we will replace this with data coming from
+   your Python paper-trading engine.
+
+============================================================ */
+
+
+const demoPaperTrade = {
+
+    status: "OPEN",
+
+    signal: "BUY_CALL",
+
+    nifty_entry: 24471.70,
+
+    option_type: "CE",
+
+    strike: 24350,
+
+    option_symbol: "NIFTY01SEP2624350CE",
+
+    expiry: "01SEP2026",
+
+    entry_price: 389.40,
+
+    current_price: 389.40,
+
+    quantity: 130,
+
+    lots: 2,
+
+    lot_size: 65,
+
+    profit_points: 0.00,
+
+    live_pnl: 0.00,
+
+    locked_profit: null,
+
+    trail_price: null,
+
+    entry_time: "2026-08-12 00:20:45"
+
+};
+
+
+/* ============================================================
+   DISPLAY PAPER TRADE
+============================================================ */
+
+function displayPaperTrade(trade) {
+
+    const statusElement =
+        document.getElementById(
+            "tradeStatus"
+        );
+
+    const contentElement =
+        document.getElementById(
+            "paperTradeContent"
+        );
+
+    const updatedElement =
+        document.getElementById(
+            "tradeLastUpdated"
+        );
+
+
+    if (!trade || trade.status !== "OPEN") {
+
+        statusElement.className =
+            "trade-status closed";
+
+        statusElement.innerHTML =
+            "⚪ NO OPEN TRADE";
+
+
+        contentElement.innerHTML = `
+
+            <div class="trade-empty">
+
+                <div class="trade-empty-icon">
+                    📋
+                </div>
+
+                <h3>
+                    No Open Paper Trade
+                </h3>
+
+                <p>
+                    Waiting for BUY_CALL or BUY_PUT signal...
+                </p>
+
+            </div>
+
+        `;
+
+
+        updatedElement.innerText =
+            "Last update: No active trade";
+
+        return;
+    }
+
+
+    /* --------------------------------------------------------
+       STATUS
+    -------------------------------------------------------- */
+
+    statusElement.className =
+        "trade-status open";
+
+    statusElement.innerHTML =
+        "🟢 OPEN";
+
+
+    /* --------------------------------------------------------
+       PROFIT / LOSS CLASS
+    -------------------------------------------------------- */
+
+    let pnlClass = "neutral";
+
+    if (trade.live_pnl > 0) {
+
+        pnlClass = "profit";
+
+    } else if (trade.live_pnl < 0) {
+
+        pnlClass = "loss";
+
+    }
+
+
+    /* --------------------------------------------------------
+       LOCK DISPLAY
+    -------------------------------------------------------- */
+
+    let lockedProfit =
+        "Not Activated";
+
+    let trailPrice =
+        "--";
+
+
+    if (
+        trade.locked_profit !== null &&
+        trade.locked_profit !== undefined
+    ) {
+
+        lockedProfit =
+            "+" +
+            Number(
+                trade.locked_profit
+            ).toFixed(2) +
+            " points";
+
+    }
+
+
+    if (
+        trade.trail_price !== null &&
+        trade.trail_price !== undefined
+    ) {
+
+        trailPrice =
+            "₹" +
+            Number(
+                trade.trail_price
+            ).toFixed(2);
+
+    }
+
+
+    /* --------------------------------------------------------
+       DISPLAY
+    -------------------------------------------------------- */
+
+    contentElement.innerHTML = `
+
+        <div class="trade-grid">
+
+            <div class="trade-item">
+
+                <h4>Signal</h4>
+
+                <p class="profit">
+                    ${trade.signal}
+                </p>
+
+            </div>
+
+
+            <div class="trade-item">
+
+                <h4>NIFTY Entry</h4>
+
+                <p>
+                    ${Number(
+                        trade.nifty_entry
+                    ).toFixed(2)}
+                </p>
+
+            </div>
+
+
+            <div class="trade-item">
+
+                <h4>Option Type</h4>
+
+                <p>
+                    ${trade.option_type}
+                </p>
+
+            </div>
+
+
+            <div class="trade-item">
+
+                <h4>Strike</h4>
+
+                <p>
+                    ${trade.strike}
+                </p>
+
+            </div>
+
+
+            <div class="trade-item">
+
+                <h4>Option</h4>
+
+                <p>
+                    ${trade.option_symbol}
+                </p>
+
+            </div>
+
+
+            <div class="trade-item">
+
+                <h4>Expiry</h4>
+
+                <p>
+                    ${trade.expiry}
+                </p>
+
+            </div>
+
+
+            <div class="trade-item">
+
+                <h4>Entry Price</h4>
+
+                <p>
+                    ₹${Number(
+                        trade.entry_price
+                    ).toFixed(2)}
+                </p>
+
+            </div>
+
+
+            <div class="trade-item">
+
+                <h4>Current LTP</h4>
+
+                <p>
+                    ₹${Number(
+                        trade.current_price
+                    ).toFixed(2)}
+                </p>
+
+            </div>
+
+
+            <div class="trade-item">
+
+                <h4>Lots</h4>
+
+                <p>
+                    ${trade.lots}
+                </p>
+
+            </div>
+
+
+            <div class="trade-item">
+
+                <h4>Lot Size</h4>
+
+                <p>
+                    ${trade.lot_size}
+                </p>
+
+            </div>
+
+
+            <div class="trade-item">
+
+                <h4>Quantity</h4>
+
+                <p>
+                    ${trade.quantity}
+                </p>
+
+            </div>
+
+
+            <div class="trade-item">
+
+                <h4>Profit Points</h4>
+
+                <p class="${pnlClass}">
+                    ${trade.profit_points >= 0 ? "+" : ""}
+                    ${Number(
+                        trade.profit_points
+                    ).toFixed(2)}
+                </p>
+
+            </div>
+
+
+            <div class="trade-item">
+
+                <h4>Live P&L</h4>
+
+                <p class="${pnlClass}">
+                    ₹${trade.live_pnl >= 0 ? "+" : ""}
+                    ${Number(
+                        trade.live_pnl
+                    ).toLocaleString(
+                        "en-IN",
+                        {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2
+                        }
+                    )}
+                </p>
+
+            </div>
+
+
+            <div class="trade-item">
+
+                <h4>Locked Profit</h4>
+
+                <p class="locked">
+                    ${lockedProfit}
+                </p>
+
+            </div>
+
+
+            <div class="trade-item">
+
+                <h4>Trail Price</h4>
+
+                <p class="locked">
+                    ${trailPrice}
+                </p>
+
+            </div>
+
+
+            <div class="trade-item">
+
+                <h4>Entry Time</h4>
+
+                <p>
+                    ${trade.entry_time}
+                </p>
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    updatedElement.innerText =
+        "Last update: " +
+        new Date().toLocaleTimeString();
+
+}
+
+
+/* ============================================================
+   TEMPORARY DEMO
+============================================================ */
+
+displayPaperTrade(
+    demoPaperTrade
+);
+
+</script>
 
 </body>
 </html>
