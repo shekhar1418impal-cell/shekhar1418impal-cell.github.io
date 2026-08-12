@@ -1,5 +1,5 @@
 {
-  "status": "OPEN",
+  "status": "CLOSED",
   "signal": "BUY_PUT",
   "nifty_entry": 24397.7,
   "option_type": "PE",
@@ -16,8 +16,8 @@
   "locked_profit": false,
   "trail_price": null,
   "entry_time": "2026-08-12 09:51:41",
-  "exit_time": null,
-  "exit_price": null,
-  "final_pnl": null,
-  "exit_reason": null
+  "exit_time": "2026-08-12 11:06:07",
+  "exit_price": 292.15,
+  "final_pnl": 6337.499999999996,
+  "exit_reason": "MANUAL EXIT"
 }
