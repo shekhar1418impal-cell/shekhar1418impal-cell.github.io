@@ -1,5 +1,5 @@
 {
-  "status": "OPEN",
+  "status": "CLOSED",
   "signal": "BUY_PUT",
   "nifty_entry": 24287.1,
   "option_type": "PE",
@@ -7,17 +7,17 @@
   "option": "NIFTY01SEP2624400PE",
   "expiry": "01SEP2026",
   "entry_price": 247.45,
-  "current_ltp": 247.4,
+  "current_ltp": 247.45,
   "lots": 2,
   "lot_size": 65,
   "quantity": 130,
-  "profit_points": -0.04999999999998295,
-  "live_pnl": -6.499999999997783,
+  "profit_points": 0.0,
+  "live_pnl": 0.0,
   "locked_profit": false,
   "trail_price": null,
   "entry_time": "2026-08-12 11:52:50",
-  "exit_time": null,
-  "exit_price": null,
-  "final_pnl": null,
-  "exit_reason": null
+  "exit_time": "2026-08-12 12:51:59",
+  "exit_price": 247.45,
+  "final_pnl": 0.0,
+  "exit_reason": "MANUAL EXIT"
 }
